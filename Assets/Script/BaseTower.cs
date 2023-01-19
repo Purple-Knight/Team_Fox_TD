@@ -17,6 +17,7 @@ public class BaseTower : MonoBehaviour
     private float actualCoolDownBtwShot;
     
     [SerializeField] private float attackPower;
+    [SerializeField] private GameObject projectile;
     
     
     private enum TargetType
@@ -69,7 +70,10 @@ public class BaseTower : MonoBehaviour
 
         for (int i = 0; i < list.Count; i++)
         {
-            Debug.Log("Attack " + list[i].name);
+            //Debug.Log("Attack " + list[i].name);
+            
+            var projo = Instantiate(projectile, transform.position, transform.rotation);
+            projo.GetComponent<Projectile>().SetTarget(list[i]);
         }
         
         actualCoolDownBtwShot = coolDownBtwShot;
