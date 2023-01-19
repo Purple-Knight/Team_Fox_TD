@@ -42,4 +42,9 @@ public class EnemyController : MonoBehaviour, IDamageable
         
         if(healthPoints <= 0) Destroy(gameObject);
     }
+
+    private void OnDestroy()
+    {
+        WaveManager.Instance.OnEnemyKilled.Invoke();
+    }
 }
