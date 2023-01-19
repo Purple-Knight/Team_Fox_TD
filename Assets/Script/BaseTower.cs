@@ -16,7 +16,7 @@ public class BaseTower : MonoBehaviour
     [SerializeField] private float coolDownBtwShot;
     private float actualCoolDownBtwShot;
     
-    [SerializeField] private float attackPower;
+    [SerializeField] private int attackPower;
     [SerializeField] private GameObject projectile;
     
     
@@ -74,6 +74,7 @@ public class BaseTower : MonoBehaviour
             
             var projo = Instantiate(projectile, transform.position, transform.rotation);
             projo.GetComponent<Projectile>().SetTarget(list[i]);
+            projo.GetComponent<Projectile>().SetAttackPower(attackPower);
         }
         
         actualCoolDownBtwShot = coolDownBtwShot;
@@ -85,7 +86,7 @@ public class BaseTower : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Enemy")
         {
             enemisList.Add(other.gameObject);
         }
@@ -93,7 +94,7 @@ public class BaseTower : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Enemy")
         {
             enemisList.Remove(other.gameObject);
         }

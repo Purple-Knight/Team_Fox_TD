@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     private bool go;
     
     [SerializeField] private float speed;
+    private int attack;
     
     
     void Start()
@@ -23,7 +24,11 @@ public class Projectile : MonoBehaviour
     {
         target = _target;
         go = true;
-        
+    }
+    
+    public void SetAttackPower(int _attack)
+    {
+        attack = _attack;
     }
 
     private void Update()
@@ -38,12 +43,12 @@ public class Projectile : MonoBehaviour
        
         if (target != null && other.gameObject == target)
         {
-            Destroy(other.gameObject);
+            other.GetComponent<EnemyController>().TakeDamage(attack);
             Destroy(gameObject);
         }
-        else if (target == null && other.tag == "Player")
+        else if (target == null && other.tag == "Enemy")
         {
-            Destroy(other.gameObject);
+            other.GetComponent<EnemyController>().TakeDamage(attack);
             Destroy(gameObject);
         }
     }
