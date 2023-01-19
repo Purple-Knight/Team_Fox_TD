@@ -43,12 +43,12 @@ public class Projectile : MonoBehaviour
        
         if (target != null && other.gameObject == target)
         {
-            other.GetComponent<EnemyController>().TakeDamage(attack);
+            other.GetComponent<IDamageable>().TakeDamage(attack);
             Destroy(gameObject);
         }
         else if (target == null && other.tag == "Enemy")
         {
-            other.GetComponent<EnemyController>().TakeDamage(attack);
+            other.GetComponent<IDamageable>().TakeDamage(attack);
             Destroy(gameObject);
         }
     }

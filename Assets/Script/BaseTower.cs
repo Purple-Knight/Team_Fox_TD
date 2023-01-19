@@ -50,9 +50,17 @@ public class BaseTower : MonoBehaviour
         switch (targetType)
         {
             case TargetType.Attack :
-                for (int i = 0; i < enemisList.Count; i++)
+                for (int i = 0; i < enemisList.Count;)
                 {
+                    if (enemisList[i] == null)
+                    {
+                        enemisList.RemoveAt(i);
+                        if (enemisList.Count == 0) break;
+                        continue;
+                    }
+
                     list.Add(enemisList[i]);
+                    i++;
                     if (numberOfTargetMax > 0 && numberOfTargetMax >= i) break;
                 }
                 break;
@@ -68,10 +76,10 @@ public class BaseTower : MonoBehaviour
     {
         List<GameObject> list = SetTarget();
 
+        if(list.Count == 0) return;
+        
         for (int i = 0; i < list.Count; i++)
         {
-            //Debug.Log("Attack " + list[i].name);
-            
             var projo = Instantiate(projectile, transform.position, transform.rotation);
             projo.GetComponent<Projectile>().SetTarget(list[i]);
             projo.GetComponent<Projectile>().SetAttackPower(attackPower);
@@ -80,6 +88,7 @@ public class BaseTower : MonoBehaviour
         actualCoolDownBtwShot = coolDownBtwShot;
     }
 
+    
     
 
     

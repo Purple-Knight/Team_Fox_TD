@@ -35,11 +35,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         transform.position = path.GetPathPosition(pathCurrentTime, pathFullTime);
     }
 
-    public void TakeDamage() => TakeDamage(15);
-
     public void TakeDamage(int amount)
     {
         healthPoints -= amount;
         Mathf.Max(healthPoints, 0);
+        
+        if(healthPoints <= 0) Destroy(gameObject);
     }
 }
