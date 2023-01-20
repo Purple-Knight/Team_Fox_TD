@@ -11,18 +11,23 @@ public class BaseTower : MonoBehaviour
     
     [Header("Targets")]
     [SerializeField] protected TargetType targetType;
-    [SerializeField] protected int numberOfTargetMax; // Set 0 if infinite
+    protected int numberOfTargetMax; // Set 0 if infinite
     [SerializeField] protected List<GameObject> TargetsList = new List<GameObject>();
     
     [Header("CoolDown")]
-    [SerializeField] private float coolDownBtwShot;
+    private float coolDownBtwShot;
     protected float actualCoolDownBtwShot;
     protected float cooldownMultiplicator;
     
     [Header("Header")]
-    [SerializeField] private int attackPower;
+    private int attackPower;
     [SerializeField] private GameObject projectile;
     
+    [Header("CommonUpgrades")]
+    [SerializeField] protected List<float> radiusUpdrades = new List<float>();
+    [SerializeField] protected List<int> numberOfTargetMaxUpdrades = new List<int>();
+    [SerializeField] private List<float> coolDownBtwShotUpdrades = new List<float>();
+    [SerializeField] private List<int> attackPowerUpdrades = new List<int>();
     
     protected enum TargetType
     {
@@ -36,6 +41,9 @@ public class BaseTower : MonoBehaviour
         rangeCollider2D.radius = radius;
         rangeCollider2D.offset = Vector2.zero;
         rangeCollider2D.isTrigger = true;
+
+        radius = 0;
+        LevelUp(0);
     }
 
     private void Update()
@@ -92,7 +100,14 @@ public class BaseTower : MonoBehaviour
         actualCoolDownBtwShot = coolDownBtwShot;
     }
 
-
+    protected virtual void LevelUp(int level)
+    {
+        if (radiusUpdrades[level] > radius) radius = radiusUpdrades[level];
+        if (numberOfTargetMaxUpdrades[level] > numberOfTargetMax || numberOfTargetMaxUpdrades[level] == 0) numberOfTargetMax = numberOfTargetMaxUpdrades[level];
+        if(coolDownBtwShotUpdrades[level] < coolDownBtwShot) coolDownBtwShot = coolDownBtwShotUpdrades[level];
+        if (attackPowerUpdrades[level] > attackPower) attackPower = attackPowerUpdrades[level];
+    }
+    
     public void ChangeAttackSpeedMultiplicator(float leFloat)
     {
         cooldownMultiplicator = leFloat;
