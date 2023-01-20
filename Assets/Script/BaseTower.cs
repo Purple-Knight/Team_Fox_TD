@@ -6,27 +6,31 @@ using UnityEngine;
 
 public class BaseTower : MonoBehaviour
 {
-    [SerializeField] private float radius;
-    private CircleCollider2D rangeCollider2D;
+    [SerializeField] protected float radius;
+    protected CircleCollider2D rangeCollider2D;
     
-    [SerializeField] private TargetType targetType;
-    [SerializeField] private int numberOfTargetMax; // Set 0 if infinite
-    [SerializeField] private List<GameObject> enemisList = new List<GameObject>();
+    [Header("Targets")]
+    [SerializeField] protected TargetType targetType;
+    [SerializeField] protected int numberOfTargetMax; // Set 0 if infinite
+    [SerializeField] protected List<GameObject> TargetsList = new List<GameObject>();
     
+    [Header("CoolDown")]
     [SerializeField] private float coolDownBtwShot;
-    private float actualCoolDownBtwShot;
+    protected float actualCoolDownBtwShot;
+    protected float cooldownMultiplicator;
     
+    [Header("Header")]
     [SerializeField] private int attackPower;
     [SerializeField] private GameObject projectile;
     
     
-    private enum TargetType
+    protected enum TargetType
     {
         Attack,
         TowerBoost,
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         rangeCollider2D = gameObject.AddComponent<CircleCollider2D>();
         rangeCollider2D.radius = radius;
@@ -38,10 +42,10 @@ public class BaseTower : MonoBehaviour
     {
         if (actualCoolDownBtwShot <= 0)
         {
-            if(enemisList.Count == 0) return;
+            if(TargetsList.Count == 0) return;
             Shoot();
         }
-        else actualCoolDownBtwShot -= Time.deltaTime;
+        else actualCoolDownBtwShot -= Time.deltaTime * (1 + cooldownMultiplicator);
     }
 
     protected List<GameObject> SetTarget()
@@ -50,16 +54,16 @@ public class BaseTower : MonoBehaviour
         switch (targetType)
         {
             case TargetType.Attack :
-                for (int i = 0; i < enemisList.Count;)
+                for (int i = 0; i < TargetsList.Count;)
                 {
-                    if (enemisList[i] == null)
+                    if (TargetsList[i] == null)
                     {
-                        enemisList.RemoveAt(i);
-                        if (enemisList.Count == 0) break;
+                        TargetsList.RemoveAt(i);
+                        if (TargetsList.Count == 0) break;
                         continue;
                     }
 
-                    list.Add(enemisList[i]);
+                    list.Add(TargetsList[i]);
                     i++;
                     if (numberOfTargetMax > 0 && numberOfTargetMax >= i) break;
                 }
@@ -88,25 +92,42 @@ public class BaseTower : MonoBehaviour
         actualCoolDownBtwShot = coolDownBtwShot;
     }
 
-    
-    
 
+    public void ChangeAttackSpeedMultiplicator(float leFloat)
+    {
+        cooldownMultiplicator = leFloat;
+    }
     
-    
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTargetEnter(Collider2D other)
+    {
+        if ((targetType == TargetType.Attack && other.tag == "Enemy"))
+        {
+            TargetsList.Add(other.gameObject);
+        }
+
+    }
+
+    protected virtual void OnTargetExit(Collider2D other)
     {
         if (other.tag == "Enemy")
         {
-            enemisList.Add(other.gameObject);
+            TargetsList.Remove(other.gameObject);
         }
+
+    }
+
+
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        OnTargetEnter(other);
+
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Enemy")
-        {
-            enemisList.Remove(other.gameObject);
-        }
+        OnTargetExit(other);
     }
     
     
