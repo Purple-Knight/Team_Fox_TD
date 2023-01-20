@@ -148,9 +148,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 3
   targetType: 1
-  numberOfTargetMax: 0
   TargetsList: []
-  coolDownBtwShot: 0
-  attackPower: 0
   projectile: {fileID: 0}
-  multiplicatorBoost: 1
+  radiusUpdrades:
+  - 3
+  - 4
+  numberOfTargetMaxUpdrades: 0000000000000000
+  coolDownBtwShotUpdrades:
+  - 0
+  - 0
+  attackPowerUpdrades: 0000000000000000
+  multiplicatorBoostUpgrade:
+  - 1
+  - 1.2

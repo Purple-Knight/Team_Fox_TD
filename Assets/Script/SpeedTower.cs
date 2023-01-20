@@ -5,7 +5,10 @@ using UnityEngine;
 public class SpeedTower : BaseTower
 {
     [Header("SpeedTower")]
-    [SerializeField] private float multiplicatorBoost;
+    [SerializeField] private List<float> multiplicatorBoostUpgrade;
+    private float multiplicatorBoost;
+    
+    
     protected override void OnTargetEnter(Collider2D other)
     {
         if ((targetType == TargetType.TowerBoost && other.tag == "Tower"))
@@ -24,4 +27,10 @@ public class SpeedTower : BaseTower
 
     }
 
+    protected override void LevelUp(int level)
+    {
+        base.LevelUp(level);
+        if (multiplicatorBoostUpgrade[level] > multiplicatorBoost)
+            multiplicatorBoost = multiplicatorBoostUpgrade[level];
+    }
 }
