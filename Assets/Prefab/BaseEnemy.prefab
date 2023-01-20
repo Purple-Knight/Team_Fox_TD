@@ -101,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 50
   moveSpeed: 10
+  path: {fileID: 0}
+  moneyManager: {fileID: 6282053426995714210, guid: 2153ccf16f0bbf74f98d10198e32a236, type: 3}
 --- !u!58 &4431327031357560163
 CircleCollider2D:
   m_ObjectHideFlags: 0
