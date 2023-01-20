@@ -23,14 +23,15 @@ public class BaseTower : MonoBehaviour
     [Header("Attack")]
     private int attackPower;
     [SerializeField] private GameObject projectile;
-    
-    [Header("CommonUpgrades")]
+
+    [Header("CommonUpgrades")] 
+    private int currentLevel = 0;
+    [SerializeField] protected  int levelMax;
     [SerializeField] protected List<float> radiusUpdrades = new List<float>();
     [SerializeField] protected List<int> numberOfTargetMaxUpdrades = new List<int>();
     [SerializeField] private List<float> coolDownBtwShotUpdrades = new List<float>();
     [SerializeField] private List<int> attackPowerUpdrades = new List<int>();
     [SerializeField] private List<Sprite> spriteUpdrades = new List<Sprite>();
-    protected int currentLevel;
     
     protected enum TargetType
     {
@@ -41,14 +42,14 @@ public class BaseTower : MonoBehaviour
     protected virtual void Start()
     {
         rangeCollider2D = gameObject.AddComponent<CircleCollider2D>();
-        rangeCollider2D.radius = radius;
         rangeCollider2D.offset = Vector2.zero;
         rangeCollider2D.isTrigger = true;
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
-
+        
         radius = 0;
-        currentLevel = -1;
-        LevelUp();
+        LevelUpStats(0);
+        
+        rangeCollider2D.radius = radius;
     }
 
     private void Update()
@@ -105,24 +106,28 @@ public class BaseTower : MonoBehaviour
         actualCoolDownBtwShot = coolDownBtwShot;
     }
 
-    public virtual bool LevelUp()
+    public void LevelUp()
     {
-        if (currentLevel == radiusUpdrades.Count - 1)
-            return false;
-        currentLevel++;
-        /*if (radiusUpdrades[level] > radius)*/ radius = radiusUpdrades[currentLevel];
-        /*if (numberOfTargetMaxUpdrades[level] > numberOfTargetMax || numberOfTargetMaxUpdrades[level] == 0)*/ numberOfTargetMax = numberOfTargetMaxUpdrades[currentLevel];
-        /*if(coolDownBtwShotUpdrades[level] < coolDownBtwShot)*/ coolDownBtwShot = coolDownBtwShotUpdrades[currentLevel];
-        /*if (attackPowerUpdrades[level] > attackPower)*/ attackPower = attackPowerUpdrades[currentLevel];
-        sr.sprite = spriteUpdrades[currentLevel];
-        return true;
+        if (currentLevel < levelMax)
+        {
+            currentLevel++;
+            LevelUpStats(currentLevel);
+        }
+    }
+    protected virtual void LevelUpStats(int level)
+    {
+        radius = radiusUpdrades[level];
+        numberOfTargetMax = numberOfTargetMaxUpdrades[level];
+        coolDownBtwShot = coolDownBtwShotUpdrades[level];
+        attackPower = attackPowerUpdrades[level];
+        sr.sprite = spriteUpdrades[level];
     }
     
     public void ChangeAttackSpeedMultiplicator(float leFloat)
     {
         cooldownMultiplicator = leFloat;
     }
-    
+
     protected virtual void OnTargetEnter(Collider2D other)
     {
         if ((targetType == TargetType.Attack && other.tag == "Enemy"))
@@ -137,8 +142,34 @@ public class BaseTower : MonoBehaviour
         if (other.tag == "Enemy")
         {
             TargetsList.Remove(other.gameObject);
+            ReorderList();
         }
 
+    }
+
+    private void ReorderList()
+    {
+        for (int i = 0; i < TargetsList.Count; i++)
+        {
+            int id = i; 
+            float pathValue = TargetsList[i].GetComponent<EnemyController>().GetPathProgress;
+            for (int j = i + 1; j < TargetsList.Count; j++)
+            {
+                float myPorgress = TargetsList[j].GetComponent<EnemyController>().GetPathProgress;
+                if (myPorgress > pathValue)
+                {
+                    pathValue = myPorgress;
+                    id = j;
+                }
+            }
+
+            if (id != i)
+            {
+                GameObject item1 = TargetsList[i];
+                TargetsList[i] = TargetsList[id];
+                TargetsList[id] = item1;
+            }
+        }
     }
 
 
