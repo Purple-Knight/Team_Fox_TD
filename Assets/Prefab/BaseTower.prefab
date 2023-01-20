@@ -168,3 +168,6 @@ MonoBehaviour:
   - 1
   - 0.8
   attackPowerUpdrades: 0500000005000000
+  spriteUpdrades:
+  - {fileID: 21300000, guid: d57dcbd3f9564554da1784d3bd7b8205, type: 3}
+  - {fileID: 21300000, guid: 42f2b2adf18bafc4084d7e88bfd6dbe3, type: 3}

@@ -8,6 +8,7 @@ public class BaseTower : MonoBehaviour
 {
     [SerializeField] protected float radius;
     protected CircleCollider2D rangeCollider2D;
+    protected SpriteRenderer sr;
     
     [Header("Targets")]
     [SerializeField] protected TargetType targetType;
@@ -19,7 +20,7 @@ public class BaseTower : MonoBehaviour
     protected float actualCoolDownBtwShot;
     protected float cooldownMultiplicator;
     
-    [Header("Header")]
+    [Header("Attack")]
     private int attackPower;
     [SerializeField] private GameObject projectile;
     
@@ -28,6 +29,7 @@ public class BaseTower : MonoBehaviour
     [SerializeField] protected List<int> numberOfTargetMaxUpdrades = new List<int>();
     [SerializeField] private List<float> coolDownBtwShotUpdrades = new List<float>();
     [SerializeField] private List<int> attackPowerUpdrades = new List<int>();
+    [SerializeField] private List<Sprite> spriteUpdrades = new List<Sprite>();
     
     protected enum TargetType
     {
@@ -41,6 +43,7 @@ public class BaseTower : MonoBehaviour
         rangeCollider2D.radius = radius;
         rangeCollider2D.offset = Vector2.zero;
         rangeCollider2D.isTrigger = true;
+        sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         radius = 0;
         LevelUp(0);
@@ -106,6 +109,7 @@ public class BaseTower : MonoBehaviour
         if (numberOfTargetMaxUpdrades[level] > numberOfTargetMax || numberOfTargetMaxUpdrades[level] == 0) numberOfTargetMax = numberOfTargetMaxUpdrades[level];
         if(coolDownBtwShotUpdrades[level] < coolDownBtwShot) coolDownBtwShot = coolDownBtwShotUpdrades[level];
         if (attackPowerUpdrades[level] > attackPower) attackPower = attackPowerUpdrades[level];
+        sr.sprite = spriteUpdrades[level];
     }
     
     public void ChangeAttackSpeedMultiplicator(float leFloat)
