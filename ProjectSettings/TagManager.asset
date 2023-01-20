@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Tower
+  - Money
   layers:
   - Default
   - TransparentFX
@@ -40,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: WorldGround
+    uniqueID: 1358472997
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
