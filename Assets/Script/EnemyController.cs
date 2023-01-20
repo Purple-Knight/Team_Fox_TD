@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     private float pathCurrentTime = 0f;
     private float pathFullTime;
+    public float speedMultiplicator;
 
     MoneyManager moneyManager;
 
@@ -43,9 +44,14 @@ public class EnemyController : MonoBehaviour, IDamageable
             return;
         }
 
-        pathCurrentTime += Time.deltaTime;
+        pathCurrentTime += Time.deltaTime * (1 - speedMultiplicator);
 
         transform.position = path.GetPathPosition(pathCurrentTime, pathFullTime);
+    }
+    
+    public void ChangeSpeedMultiplicator(float leFloat)
+    {
+        speedMultiplicator = leFloat;
     }
 
     public void TakeDamage(int amount)

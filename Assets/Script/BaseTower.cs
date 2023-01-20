@@ -40,13 +40,14 @@ public class BaseTower : MonoBehaviour
     protected virtual void Start()
     {
         rangeCollider2D = gameObject.AddComponent<CircleCollider2D>();
-        rangeCollider2D.radius = radius;
         rangeCollider2D.offset = Vector2.zero;
         rangeCollider2D.isTrigger = true;
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
-
+        
         radius = 0;
         LevelUp(0);
+        
+        rangeCollider2D.radius = radius;
     }
 
     private void Update()
@@ -105,10 +106,10 @@ public class BaseTower : MonoBehaviour
 
     protected virtual void LevelUp(int level)
     {
-        /*if (radiusUpdrades[level] > radius)*/ radius = radiusUpdrades[level];
-        /*if (numberOfTargetMaxUpdrades[level] > numberOfTargetMax || numberOfTargetMaxUpdrades[level] == 0)*/ numberOfTargetMax = numberOfTargetMaxUpdrades[level];
-        /*if(coolDownBtwShotUpdrades[level] < coolDownBtwShot)*/ coolDownBtwShot = coolDownBtwShotUpdrades[level];
-        /*if (attackPowerUpdrades[level] > attackPower)*/ attackPower = attackPowerUpdrades[level];
+        radius = radiusUpdrades[level];
+        numberOfTargetMax = numberOfTargetMaxUpdrades[level];
+        coolDownBtwShot = coolDownBtwShotUpdrades[level];
+        attackPower = attackPowerUpdrades[level];
         sr.sprite = spriteUpdrades[level];
     }
     
@@ -116,7 +117,7 @@ public class BaseTower : MonoBehaviour
     {
         cooldownMultiplicator = leFloat;
     }
-    
+
     protected virtual void OnTargetEnter(Collider2D other)
     {
         if ((targetType == TargetType.Attack && other.tag == "Enemy"))
@@ -131,8 +132,34 @@ public class BaseTower : MonoBehaviour
         if (other.tag == "Enemy")
         {
             TargetsList.Remove(other.gameObject);
+            ReorderList();
         }
 
+    }
+
+    private void ReorderList()
+    {
+        for (int i = 0; i < TargetsList.Count; i++)
+        {
+            int id = i; 
+            float pathValue = TargetsList[i].GetComponent<EnemyController>().GetPathProgress;
+            for (int j = i + 1; j < TargetsList.Count; j++)
+            {
+                float myPorgress = TargetsList[j].GetComponent<EnemyController>().GetPathProgress;
+                if (myPorgress > pathValue)
+                {
+                    pathValue = myPorgress;
+                    id = j;
+                }
+            }
+
+            if (id != i)
+            {
+                GameObject item1 = TargetsList[i];
+                TargetsList[i] = TargetsList[id];
+                TargetsList[id] = item1;
+            }
+        }
     }
 
 
