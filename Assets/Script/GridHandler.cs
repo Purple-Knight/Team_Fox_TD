@@ -1,13 +1,18 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class GridHandler : MonoBehaviour
 {
+    [Serializable]
+    public enum CellType { Blocked, Free, Occupied }
+
     public Tilemap map;
 
-    private Vector2Int selectedTilePosition;
+    public GameObject towerPrefab;
+
+    private Vector3Int selectedTilePosition;
 
     void Start()
     {
@@ -28,9 +33,8 @@ public class GridHandler : MonoBehaviour
         if (!map.HasTile(gridPos))
             return;
 
-        selectedTilePosition.x = gridPos.x;
-        selectedTilePosition.y = gridPos.y;
+        selectedTilePosition = gridPos;
 
-        Debug.Log($"Tile pos {selectedTilePosition}");
+        Instantiate(towerPrefab, map.CellToWorld(selectedTilePosition), Quaternion.identity);
     }
 }
