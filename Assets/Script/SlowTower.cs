@@ -26,9 +26,9 @@ public class SlowTower : BaseTower
 
     }
 
-    protected override void LevelUp(int level)
+    protected override void LevelUpStats(int level)
     {
-        base.LevelUp(level);
+        base.LevelUpStats(level);
         if (multiplicatorSlowUpgrade[level] > multiplicatorSlow)
             multiplicatorSlow = multiplicatorSlowUpgrade[level];
     }

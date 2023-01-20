@@ -23,8 +23,10 @@ public class BaseTower : MonoBehaviour
     [Header("Attack")]
     private int attackPower;
     [SerializeField] private GameObject projectile;
-    
-    [Header("CommonUpgrades")]
+
+    [Header("CommonUpgrades")] 
+    private int currentLevel = 0;
+    [SerializeField] protected  int levelMax;
     [SerializeField] protected List<float> radiusUpdrades = new List<float>();
     [SerializeField] protected List<int> numberOfTargetMaxUpdrades = new List<int>();
     [SerializeField] private List<float> coolDownBtwShotUpdrades = new List<float>();
@@ -45,7 +47,7 @@ public class BaseTower : MonoBehaviour
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         
         radius = 0;
-        LevelUp(0);
+        LevelUpStats(0);
         
         rangeCollider2D.radius = radius;
     }
@@ -104,7 +106,15 @@ public class BaseTower : MonoBehaviour
         actualCoolDownBtwShot = coolDownBtwShot;
     }
 
-    protected virtual void LevelUp(int level)
+    public void LevelUp()
+    {
+        if (currentLevel < levelMax)
+        {
+            currentLevel++;
+            LevelUpStats(currentLevel);
+        }
+    }
+    protected virtual void LevelUpStats(int level)
     {
         radius = radiusUpdrades[level];
         numberOfTargetMax = numberOfTargetMaxUpdrades[level];

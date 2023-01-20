@@ -586,6 +586,10 @@ PrefabInstance:
       value: BaseTower
       objectReference: {fileID: 0}
     - target: {fileID: 5383151399843135249, guid: c6f1286d02a515b4f98d1efbbbcfa1aa, type: 3}
+      propertyPath: levelMax
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5383151399843135249, guid: c6f1286d02a515b4f98d1efbbbcfa1aa, type: 3}
       propertyPath: radiusUpdrades.Array.data[0]
       value: 3
       objectReference: {fileID: 0}
