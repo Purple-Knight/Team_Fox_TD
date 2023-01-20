@@ -11,6 +11,11 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     public PathController path;
 
+    /// <summary>
+    /// Returns Full Path progression between 0-1.
+    /// </summary>
+    public float GetPathProgress { get => pathCurrentTime / pathFullTime; }
+
     private float pathCurrentTime = 0f;
     private float pathFullTime;
 
