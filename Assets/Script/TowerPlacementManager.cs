@@ -15,6 +15,7 @@ public class TowerPlacementManager : MonoBehaviour
     [SerializeField] private List<TurretsPrefabs> allTurrets;
     private Vector3 clickedGridPostion;
     private bool alreadyClicked = false;
+    private BaseTower currentTurret;
 
     [SerializeField] private GameObject turretWheel;
     [SerializeField] private GameObject upgradeWindow;
@@ -31,6 +32,7 @@ public class TowerPlacementManager : MonoBehaviour
             OnMouseClick();
         }
     }
+
     public void OnMouseClick()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -39,10 +41,9 @@ public class TowerPlacementManager : MonoBehaviour
         switch (grid.CheckSpaceStatus(mousePos))
         {
             case GridHandler.CellType.Blocked:
-                //do nothing
+
                 break;
             case GridHandler.CellType.Free:
-                //show wheel
                 turretWheel.transform.position = mousePos;
                 turretWheel.SetActive(true);
                 alreadyClicked = true;
@@ -50,9 +51,12 @@ public class TowerPlacementManager : MonoBehaviour
                 break;
             case GridHandler.CellType.Occupied:
                 alreadyClicked = true;
+                upgradeWindow.transform.position = mousePos;
+                upgradeWindow.SetActive(true);
+                RaycastHit2D hit = Physics2D.CircleCast(mousePos, .1f, Vector2.right);
+                currentTurret = hit.collider.GetComponent<BaseTower>();
+                Debug.Log(currentTurret.gameObject.name);
 
-                //show upgrade cost
-                //raycast to find gameobject
                 break;
             default:
                 break;
@@ -74,5 +78,23 @@ public class TowerPlacementManager : MonoBehaviour
 
         alreadyClicked = false;
         turretWheel.SetActive(false);
+    }
+
+    public void UpgradeTower()
+    {
+        if (currentTurret.LevelUp()) 
+        {
+            Debug.Log("upgraded");
+        }
+        //remove money
+
+        alreadyClicked = false;
+        upgradeWindow.SetActive(false);
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(currentTurret.transform.position, 0.1f);
     }
 }

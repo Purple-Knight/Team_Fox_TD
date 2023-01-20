@@ -30,6 +30,7 @@ public class BaseTower : MonoBehaviour
     [SerializeField] private List<float> coolDownBtwShotUpdrades = new List<float>();
     [SerializeField] private List<int> attackPowerUpdrades = new List<int>();
     [SerializeField] private List<Sprite> spriteUpdrades = new List<Sprite>();
+    protected int currentLevel;
     
     protected enum TargetType
     {
@@ -46,7 +47,8 @@ public class BaseTower : MonoBehaviour
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         radius = 0;
-        LevelUp(0);
+        currentLevel = -1;
+        LevelUp();
     }
 
     private void Update()
@@ -103,13 +105,17 @@ public class BaseTower : MonoBehaviour
         actualCoolDownBtwShot = coolDownBtwShot;
     }
 
-    protected virtual void LevelUp(int level)
+    public virtual bool LevelUp()
     {
-        /*if (radiusUpdrades[level] > radius)*/ radius = radiusUpdrades[level];
-        /*if (numberOfTargetMaxUpdrades[level] > numberOfTargetMax || numberOfTargetMaxUpdrades[level] == 0)*/ numberOfTargetMax = numberOfTargetMaxUpdrades[level];
-        /*if(coolDownBtwShotUpdrades[level] < coolDownBtwShot)*/ coolDownBtwShot = coolDownBtwShotUpdrades[level];
-        /*if (attackPowerUpdrades[level] > attackPower)*/ attackPower = attackPowerUpdrades[level];
-        sr.sprite = spriteUpdrades[level];
+        if (currentLevel == radiusUpdrades.Count - 1)
+            return false;
+        currentLevel++;
+        /*if (radiusUpdrades[level] > radius)*/ radius = radiusUpdrades[currentLevel];
+        /*if (numberOfTargetMaxUpdrades[level] > numberOfTargetMax || numberOfTargetMaxUpdrades[level] == 0)*/ numberOfTargetMax = numberOfTargetMaxUpdrades[currentLevel];
+        /*if(coolDownBtwShotUpdrades[level] < coolDownBtwShot)*/ coolDownBtwShot = coolDownBtwShotUpdrades[currentLevel];
+        /*if (attackPowerUpdrades[level] > attackPower)*/ attackPower = attackPowerUpdrades[currentLevel];
+        sr.sprite = spriteUpdrades[currentLevel];
+        return true;
     }
     
     public void ChangeAttackSpeedMultiplicator(float leFloat)

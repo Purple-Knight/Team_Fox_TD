@@ -36,7 +36,7 @@ public class GridHandler : MonoBehaviour
         var gridPos = map.WorldToCell(mousePos);
         Vector3 pos = map.CellToWorld(gridPos);
 
-        gridSpaceOccupied.Add(pos, true);
+        gridSpaceOccupied.Add(gridPos, true);
         return pos + tileOffset;
     }
 }

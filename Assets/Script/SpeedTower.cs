@@ -27,10 +27,11 @@ public class SpeedTower : BaseTower
 
     }
 
-    protected override void LevelUp(int level)
+    public override bool LevelUp()
     {
-        base.LevelUp(level);
-        if (multiplicatorBoostUpgrade[level] > multiplicatorBoost)
-            multiplicatorBoost = multiplicatorBoostUpgrade[level];
+        base.LevelUp();
+        if (multiplicatorBoostUpgrade[currentLevel] > multiplicatorBoost)
+            multiplicatorBoost = multiplicatorBoostUpgrade[currentLevel];
+        return true;
     }
 }
