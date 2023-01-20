@@ -23,8 +23,9 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: Library
-          key: Library-${{ matrix.targetPlatform }}
-          restore-keys: Library-
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
       - uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -37,3 +38,8 @@ jobs:
         with:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
+      - uses: nebularg/actions-discord-webhook@v1
+          with:
+            webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }} # required 
+            status: ${{ job.status }} # optional, this is the default
+          if: always() # or failure() or success()
