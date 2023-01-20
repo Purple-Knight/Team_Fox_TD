@@ -59,18 +59,17 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void OnKilled()
     {
         moneyManager.UpdateCoin(100, 0);
-        WaveManager.Instance.OnEnemyKilled.Invoke();
-        Destroy(gameObject);
+        Delete();
     }
 
     private void ReachedGoal()
     {
-        WaveManager.Instance.OnEnemyKilled.Invoke();
-        Destroy(gameObject);
+        Delete();
     }
 
-    private void OnDestroy()
+    private void Delete()
     {
         WaveManager.Instance.OnEnemyKilled.Invoke();
+        Destroy(gameObject);
     }
 }
