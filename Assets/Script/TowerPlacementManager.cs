@@ -9,6 +9,7 @@ public class TowerPlacementManager : MonoBehaviour
     {
         public string turretType;
         public GameObject turretPrefab;
+        public int price;
     }
 
     private GridHandler grid;
@@ -65,12 +66,16 @@ public class TowerPlacementManager : MonoBehaviour
 
     public void SpawnTuret(string turretType)
     {
-        Vector3 pos = grid.GetGridSnapPosition(clickedGridPostion);
 
         for (int i = 0; i < allTurrets.Count; i++)
         {
             if( allTurrets[i].turretType == turretType)
             {
+                if (!MoneyManager.Instance.CanBuy(allTurrets[i].price))
+                    break;
+                MoneyManager.Instance.UpdateCoin(0, allTurrets[i].price);
+
+                Vector3 pos = grid.GetGridSnapPosition(clickedGridPostion);
                 Instantiate(allTurrets[i].turretPrefab, pos, Quaternion.identity);
                 break;
             }
@@ -82,19 +87,15 @@ public class TowerPlacementManager : MonoBehaviour
 
     public void UpgradeTower()
     {
+        if (!MoneyManager.Instance.CanBuy(100))
+            return;
+        
         if (currentTurret.LevelUp()) 
         {
-            Debug.Log("upgraded");
+            MoneyManager.Instance.UpdateCoin(0, 100);
         }
-        //remove money
 
         alreadyClicked = false;
         upgradeWindow.SetActive(false);
-    }
-
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(currentTurret.transform.position, 0.1f);
     }
 }
