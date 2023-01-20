@@ -25,6 +25,6 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Time.timeScale = 0;
-        SceneManager.LoadSceneAsync("GameOverScene", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("GameOver", LoadSceneMode.Additive);
     }
 }
