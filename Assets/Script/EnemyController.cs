@@ -64,6 +64,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     private void ReachedGoal()
     {
+        PlayerHealthManager.Instance.OnLoseHealth();
         Delete();
     }
 

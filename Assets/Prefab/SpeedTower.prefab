@@ -190,6 +190,9 @@ MonoBehaviour:
   - 0
   - 0
   attackPowerUpdrades: 0000000000000000
+  spriteUpdrades:
+  - {fileID: 21300000, guid: 259beb6d93965f340be5c74bdfe163a8, type: 3}
+  - {fileID: 21300000, guid: fa557cc1aab73db40aa5037e9c0cb506, type: 3}
   multiplicatorBoostUpgrade:
   - 1
   - 1.2

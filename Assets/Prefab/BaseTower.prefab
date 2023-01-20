@@ -163,7 +163,7 @@ MonoBehaviour:
   radiusUpdrades:
   - 3
   - 4
-  numberOfTargetMaxUpdrades: 0000000000000000
+  numberOfTargetMaxUpdrades: 0200000004000000
   coolDownBtwShotUpdrades:
   - 1
   - 0.8
