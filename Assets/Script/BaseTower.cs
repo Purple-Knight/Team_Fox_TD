@@ -106,13 +106,15 @@ public class BaseTower : MonoBehaviour
         actualCoolDownBtwShot = coolDownBtwShot;
     }
 
-    public void LevelUp()
+    public bool LevelUp()
     {
         if (currentLevel < levelMax)
         {
             currentLevel++;
             LevelUpStats(currentLevel);
+            return true;
         }
+        return false;
     }
     protected virtual void LevelUpStats(int level)
     {
