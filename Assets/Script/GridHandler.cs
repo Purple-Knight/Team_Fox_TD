@@ -10,31 +10,33 @@ public class GridHandler : MonoBehaviour
 
     public Tilemap map;
 
-    public GameObject towerPrefab;
-
-    private Vector3Int selectedTilePosition;
+    private Dictionary<Vector3, bool> gridSpaceOccupied;
+    [SerializeField] private Vector3 tileOffset;
 
     void Start()
     {
-        
+        gridSpaceOccupied = new Dictionary<Vector3, bool>();
     }
 
-    void Update()
+    public CellType CheckSpaceStatus(Vector2 mousePos)
     {
-        if (Input.GetMouseButtonDown(0))
-            OnMouseClick();
-    }
-
-    private void OnMouseClick()
-    {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var gridPos = map.WorldToCell(mousePos);
 
-        if (!map.HasTile(gridPos))
-            return;
+        if (!map.HasTile(gridPos) || map.GetSprite(gridPos).name != "grass")
+            return CellType.Blocked;
 
-        selectedTilePosition = gridPos;
+        if (gridSpaceOccupied.ContainsKey(gridPos))
+            return CellType.Occupied;
 
-        Instantiate(towerPrefab, map.CellToWorld(selectedTilePosition), Quaternion.identity);
+        return CellType.Free;
+    }
+
+    public Vector3 GetGridSnapPosition(Vector2 mousePos)
+    {
+        var gridPos = map.WorldToCell(mousePos);
+        Vector3 pos = map.CellToWorld(gridPos);
+
+        gridSpaceOccupied.Add(pos, true);
+        return pos + tileOffset;
     }
 }
