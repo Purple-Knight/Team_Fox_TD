@@ -14,6 +14,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     private float pathCurrentTime = 0f;
     private float pathFullTime;
 
+    MoneyManager moneyManager;
+
     void Start()
     {
         if(path == null)
@@ -23,6 +25,8 @@ public class EnemyController : MonoBehaviour, IDamageable
         }
 
         pathFullTime = path.Distance / Speed;
+
+        moneyManager = GameObject.FindGameObjectWithTag("Money").GetComponent<MoneyManager>();
     }
 
     void Update()
@@ -40,11 +44,19 @@ public class EnemyController : MonoBehaviour, IDamageable
         healthPoints -= amount;
         Mathf.Max(healthPoints, 0);
         
-        if(healthPoints <= 0) Destroy(gameObject);
+        if(healthPoints <= 0) OnKilled();
     }
 
-    private void OnDestroy()
+    private void OnKilled()
+    {
+        moneyManager.UpdateCoin(100, 0);
+        Destroy(gameObject);
+        //WaveManager.Instance.OnEnemyKilled.Invoke();
+    }
+
+
+    /*private void OnDestroy()
     {
         WaveManager.Instance.OnEnemyKilled.Invoke();
-    }
+    }*/
 }
