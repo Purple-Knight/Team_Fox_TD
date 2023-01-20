@@ -10,6 +10,8 @@ public class PathController : MonoBehaviour
     public float Distance { get => distance; private set => distance = value; }
     private float distance;
 
+    public Vector2 StartPosition { get => pathPoints[0]; }
+
     private void Awake()
     {
         pathCheckpoints = new List<float>(1) { 0f };
