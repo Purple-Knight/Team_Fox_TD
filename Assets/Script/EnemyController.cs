@@ -33,7 +33,11 @@ public class EnemyController : MonoBehaviour, IDamageable
     void Update()
     {
         if (path == null) return;
-        if (pathCurrentTime >= pathFullTime) return;
+        if (pathCurrentTime >= pathFullTime)
+        {
+            ReachedGoal();
+            return;
+        }
 
         pathCurrentTime += Time.deltaTime;
 
@@ -46,6 +50,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         Mathf.Max(healthPoints, 0);
         
         if(healthPoints <= 0) Destroy(gameObject);
+    }
+
+    private void ReachedGoal()
+    {
+        Destroy(gameObject);
     }
 
     private void OnDestroy()
