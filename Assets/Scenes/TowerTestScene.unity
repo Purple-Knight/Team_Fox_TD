@@ -451,6 +451,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpeedTower
       objectReference: {fileID: 0}
+    - target: {fileID: 2189861911308072788, guid: cc91cc55f0ef8164d90122c25e8b89d5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2189861911308072789, guid: cc91cc55f0ef8164d90122c25e8b89d5, type: 3}
       propertyPath: spriteUpdrades.Array.size
       value: 2
@@ -469,11 +473,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2189861911308072791, guid: cc91cc55f0ef8164d90122c25e8b89d5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.69
+      value: -1.8
       objectReference: {fileID: 0}
     - target: {fileID: 2189861911308072791, guid: cc91cc55f0ef8164d90122c25e8b89d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.69
+      value: 2.88
       objectReference: {fileID: 0}
     - target: {fileID: 2189861911308072791, guid: cc91cc55f0ef8164d90122c25e8b89d5, type: 3}
       propertyPath: m_LocalPosition.z

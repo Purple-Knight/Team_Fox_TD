@@ -105,10 +105,10 @@ public class BaseTower : MonoBehaviour
 
     protected virtual void LevelUp(int level)
     {
-        if (radiusUpdrades[level] > radius) radius = radiusUpdrades[level];
-        if (numberOfTargetMaxUpdrades[level] > numberOfTargetMax || numberOfTargetMaxUpdrades[level] == 0) numberOfTargetMax = numberOfTargetMaxUpdrades[level];
-        if(coolDownBtwShotUpdrades[level] < coolDownBtwShot) coolDownBtwShot = coolDownBtwShotUpdrades[level];
-        if (attackPowerUpdrades[level] > attackPower) attackPower = attackPowerUpdrades[level];
+        /*if (radiusUpdrades[level] > radius)*/ radius = radiusUpdrades[level];
+        /*if (numberOfTargetMaxUpdrades[level] > numberOfTargetMax || numberOfTargetMaxUpdrades[level] == 0)*/ numberOfTargetMax = numberOfTargetMaxUpdrades[level];
+        /*if(coolDownBtwShotUpdrades[level] < coolDownBtwShot)*/ coolDownBtwShot = coolDownBtwShotUpdrades[level];
+        /*if (attackPowerUpdrades[level] > attackPower)*/ attackPower = attackPowerUpdrades[level];
         sr.sprite = spriteUpdrades[level];
     }
     
