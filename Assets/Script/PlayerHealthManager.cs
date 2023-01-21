@@ -10,6 +10,8 @@ public class PlayerHealthManager : MonoBehaviour
     [SerializeField] private int maxHealth = 3;
     private int currentHealth;
 
+    LifeManager lifeManager;
+
     private void Start()
     {
         if (PlayerHealthManager.Instance != null)
@@ -22,11 +24,14 @@ public class PlayerHealthManager : MonoBehaviour
             instance = this;
         }
         currentHealth = maxHealth;
+
+        lifeManager = GameObject.FindGameObjectWithTag("Life").GetComponent<LifeManager>();
     }
 
     public void OnLoseHealth()
     {
         currentHealth--;
+        lifeManager.UpdateLife(currentHealth);
         if(currentHealth <= 0)
         {
             GameManager.Instance.GameOver();
