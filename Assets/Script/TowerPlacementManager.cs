@@ -15,7 +15,7 @@ public class TowerPlacementManager : MonoBehaviour
     private GridHandler grid;
     [SerializeField] private List<TurretsPrefabs> allTurrets;
     private Vector3 clickedGridPostion;
-    private bool alreadyClicked = false;
+    private bool isWheelOpened = false;
     private BaseTower currentTurret;
 
     [SerializeField] private GameObject turretWheel;
@@ -24,11 +24,12 @@ public class TowerPlacementManager : MonoBehaviour
     private void Start()
     {
         grid = GetComponent<GridHandler>();
+        CloseWheels();
     }
 
     private void Update()
     {
-        if (!alreadyClicked && Input.GetMouseButtonDown(0))
+        if (!isWheelOpened && Input.GetMouseButtonDown(0))
         {
             OnMouseClick();
         }
@@ -42,16 +43,15 @@ public class TowerPlacementManager : MonoBehaviour
         switch (grid.CheckSpaceStatus(mousePos))
         {
             case GridHandler.CellType.Blocked:
-
                 break;
             case GridHandler.CellType.Free:
                 turretWheel.transform.position = mousePos;
                 turretWheel.SetActive(true);
-                alreadyClicked = true;
+                isWheelOpened = true;
 
                 break;
             case GridHandler.CellType.Occupied:
-                alreadyClicked = true;
+                isWheelOpened = true;
                 upgradeWindow.transform.position = mousePos;
                 upgradeWindow.SetActive(true);
                 RaycastHit2D hit = Physics2D.CircleCast(mousePos, .1f, Vector2.right);
@@ -59,14 +59,11 @@ public class TowerPlacementManager : MonoBehaviour
                 Debug.Log(currentTurret.gameObject.name);
 
                 break;
-            default:
-                break;
         }
     }
 
     public void SpawnTuret(string turretType)
     {
-
         for (int i = 0; i < allTurrets.Count; i++)
         {
             if( allTurrets[i].turretType == turretType)
@@ -81,8 +78,7 @@ public class TowerPlacementManager : MonoBehaviour
             }
         }
 
-        alreadyClicked = false;
-        turretWheel.SetActive(false);
+        CloseWheels();
     }
 
     public void UpgradeTower()
@@ -95,7 +91,13 @@ public class TowerPlacementManager : MonoBehaviour
             MoneyManager.Instance.UpdateCoin(0, 100);
         }
 
-        alreadyClicked = false;
+        CloseWheels();
+    }
+
+    public void CloseWheels()
+    {
+        isWheelOpened = false;
+        turretWheel.SetActive(false);
         upgradeWindow.SetActive(false);
     }
 }
