@@ -13,7 +13,7 @@ public class SpeedTower : BaseTower
     {
         if ((targetType == TargetType.TowerBoost && other.tag == "Tower"))
         {
-            other.transform.parent.GetComponent<BaseTower>().ChangeAttackSpeedMultiplicator(multiplicatorBoost);
+            other.transform.GetComponent<BaseTower>().ChangeAttackSpeedMultiplicator(multiplicatorBoost);
         }
 
     }

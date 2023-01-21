@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 2781399479504207177}
   m_Layer: 0
   m_Name: BaseTower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,17 +134,21 @@ MonoBehaviour:
   targetType: 0
   TargetsList: []
   projectile: {fileID: 6989261266319308450, guid: f4d86d0d434c2794aa36fe635911ef4c, type: 3}
+  levelMax: 2
   radiusUpdrades:
   - 3
   - 4
-  numberOfTargetMaxUpdrades: 0200000004000000
+  - 5
+  numberOfTargetMaxUpdrades: 020000000400000006000000
   coolDownBtwShotUpdrades:
   - 1
   - 0.8
-  attackPowerUpdrades: 0500000005000000
+  - 0.75
+  attackPowerUpdrades: 05000000080000000a000000
   spriteUpdrades:
   - {fileID: 21300000, guid: d57dcbd3f9564554da1784d3bd7b8205, type: 3}
   - {fileID: 21300000, guid: 42f2b2adf18bafc4084d7e88bfd6dbe3, type: 3}
+  - {fileID: 21300000, guid: 46dc03089741ce4469be9b8a6fe6d715, type: 3}
 --- !u!61 &2781399479504207177
 BoxCollider2D:
   m_ObjectHideFlags: 0

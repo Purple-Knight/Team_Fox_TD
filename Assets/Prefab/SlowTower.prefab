@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1292724745931836478}
   m_Layer: 0
   m_Name: SlowTower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,21 +76,25 @@ MonoBehaviour:
   targetType: 0
   TargetsList: []
   projectile: {fileID: 0}
-  levelMax: 0
+  levelMax: 2
   radiusUpdrades:
   - 3
   - 4
-  numberOfTargetMaxUpdrades: 0000000000000000
+  - 5
+  numberOfTargetMaxUpdrades: 000000000000000000000000
   coolDownBtwShotUpdrades:
   - 0
   - 0
-  attackPowerUpdrades: 0000000000000000
+  - 0
+  attackPowerUpdrades: 000000000000000000000000
   spriteUpdrades:
   - {fileID: 21300000, guid: 259beb6d93965f340be5c74bdfe163a8, type: 3}
   - {fileID: 21300000, guid: fa557cc1aab73db40aa5037e9c0cb506, type: 3}
+  - {fileID: 21300000, guid: d4ec7e84c7000ab41b12d57df92bc6e3, type: 3}
   multiplicatorSlowUpgrade:
-  - 0.1
-  - 0.2
+  - 0.3
+  - 0.5
+  - 0.75
 --- !u!1 &8795070969086613615
 GameObject:
   m_ObjectHideFlags: 0
